@@ -5,9 +5,11 @@ define([
     './options',
     './util',
     './scopeflags'
-], function (m_identifier, tt, m_whitespace, m_options, m_util, m_scopeflags) {
+], function (m_identifier, m_tokentype, m_whitespace, m_options, m_util, m_scopeflags) {
     'use strict';
     const {reservedWords, keywords} = m_identifier;
+    const {types : tt} = m_tokentype;
+
     const {lineBreak} = m_whitespace;
     const {getOptions} = m_options;
     const {wordsRegexp} = m_util;

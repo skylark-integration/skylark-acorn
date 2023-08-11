@@ -3,8 +3,10 @@ define([
     './state',
     './util',
     './scopeflags'
-], function (tt, m_state, m_util, m_scopeflags) {
+], function (m_tokentype, m_state, m_util, m_scopeflags) {
     'use strict';
+    const {types : tt} = m_tokentype;
+
     const {Parser} = m_state;
     const {hasOwn} = m_util;
     const {BIND_NONE, BIND_OUTSIDE, BIND_LEXICAL} = m_scopeflags;

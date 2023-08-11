@@ -2,8 +2,10 @@ define([
     './tokentype',
     './state',
     './whitespace'
-], function (tt, m_state, m_whitespace) {
+], function (m_tokentype, m_state, m_whitespace) {
     'use strict';
+    const {types : tt} = m_tokentype;
+
     const {Parser} = m_state;
     const {lineBreak, skipWhiteSpace} = m_whitespace;
     const pp = Parser.prototype;

@@ -5,8 +5,12 @@ define([
     './parseutil',
     './whitespace',
     './scopeflags'
-], function (tt, tokenCtxTypes, m_state, m_parseutil, m_whitespace, m_scopeflags) {
+], function (m_tokentype, m_tokencontext, m_state, m_parseutil, m_whitespace, m_scopeflags) {
     'use strict';
+
+    const {types : tt} = m_tokentype;
+    const {types : tokenCtxTypes} = m_tokencontext;
+
     const {Parser} = m_state;
     const {DestructuringErrors} = m_parseutil;
     const {lineBreak} = m_whitespace;

@@ -2,9 +2,10 @@ define([
     './state',
     './tokentype',
     './whitespace'
-], function (m_state, tt, m_whitespace) {
+], function (m_state, m_tokentype, m_whitespace) {
     'use strict';
     const {Parser} = m_state;
+    const {types : tt} = m_tokentype;
     const {lineBreak} = m_whitespace;
     class TokContext {
         constructor(token, isExpr, preserveSpace, override, generator) {

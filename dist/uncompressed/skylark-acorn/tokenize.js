@@ -1,15 +1,17 @@
 define([
     './identifier',
     './tokentype',
-    './tokentype',
     './state',
     './locutil',
     './regexp',
     './whitespace',
     './util'
-], function (m_identifier, tt, keywordTypes, m_state, m_locutil, m_regexp, m_whitespace, m_util) {
+], function (m_identifier, m_tokentype, m_state, m_locutil, m_regexp, m_whitespace, m_util) {
     'use strict';
     const {isIdentifierStart, isIdentifierChar} = m_identifier;
+
+    const {types : tt, keywords : keywordTypes} = m_tokentype;
+
     const {Parser} = m_state;
     const {SourceLocation} = m_locutil;
     const {RegExpValidationState} = m_regexp;

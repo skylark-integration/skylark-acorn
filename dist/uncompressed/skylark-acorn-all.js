@@ -1394,9 +1394,11 @@ define('skylark-acorn/state',[
     './options',
     './util',
     './scopeflags'
-], function (m_identifier, tt, m_whitespace, m_options, m_util, m_scopeflags) {
+], function (m_identifier, m_tokentype, m_whitespace, m_options, m_util, m_scopeflags) {
     'use strict';
     const {reservedWords, keywords} = m_identifier;
+    const {types : tt} = m_tokentype;
+
     const {lineBreak} = m_whitespace;
     const {getOptions} = m_options;
     const {wordsRegexp} = m_util;
@@ -1513,8 +1515,10 @@ define('skylark-acorn/parseutil',[
     './tokentype',
     './state',
     './whitespace'
-], function (tt, m_state, m_whitespace) {
+], function (m_tokentype, m_state, m_whitespace) {
     'use strict';
+    const {types : tt} = m_tokentype;
+
     const {Parser} = m_state;
     const {lineBreak, skipWhiteSpace} = m_whitespace;
     const pp = Parser.prototype;
@@ -1637,8 +1641,10 @@ define('skylark-acorn/statement',[
     './util',
     './parseutil',
     './scopeflags'
-], function (tt, m_state, m_whitespace, m_identifier, m_util, m_parseutil, m_scopeflags) {
+], function (m_tokentype, m_state, m_whitespace, m_identifier, m_util, m_parseutil, m_scopeflags) {
     'use strict';
+    const {types : tt} = m_tokentype;
+
     const {Parser} = m_state;
     const {lineBreak, skipWhiteSpace} = m_whitespace;
     const {isIdentifierStart, isIdentifierChar, keywordRelationalOperator} = m_identifier;
@@ -2565,8 +2571,10 @@ define('skylark-acorn/lval',[
     './state',
     './util',
     './scopeflags'
-], function (tt, m_state, m_util, m_scopeflags) {
+], function (m_tokentype, m_state, m_util, m_scopeflags) {
     'use strict';
+    const {types : tt} = m_tokentype;
+
     const {Parser} = m_state;
     const {hasOwn} = m_util;
     const {BIND_NONE, BIND_OUTSIDE, BIND_LEXICAL} = m_scopeflags;
@@ -2788,9 +2796,10 @@ define('skylark-acorn/tokencontext',[
     './state',
     './tokentype',
     './whitespace'
-], function (m_state, tt, m_whitespace) {
+], function (m_state, m_tokentype, m_whitespace) {
     'use strict';
     const {Parser} = m_state;
+    const {types : tt} = m_tokentype;
     const {lineBreak} = m_whitespace;
     class TokContext {
         constructor(token, isExpr, preserveSpace, override, generator) {
@@ -2928,8 +2937,12 @@ define('skylark-acorn/expression',[
     './parseutil',
     './whitespace',
     './scopeflags'
-], function (tt, tokenCtxTypes, m_state, m_parseutil, m_whitespace, m_scopeflags) {
+], function (m_tokentype, m_tokencontext, m_state, m_parseutil, m_whitespace, m_scopeflags) {
     'use strict';
+
+    const {types : tt} = m_tokentype;
+    const {types : tokenCtxTypes} = m_tokencontext;
+
     const {Parser} = m_state;
     const {DestructuringErrors} = m_parseutil;
     const {lineBreak} = m_whitespace;
@@ -5075,15 +5088,17 @@ define('skylark-acorn/regexp',[
 define('skylark-acorn/tokenize',[
     './identifier',
     './tokentype',
-    './tokentype',
     './state',
     './locutil',
     './regexp',
     './whitespace',
     './util'
-], function (m_identifier, tt, keywordTypes, m_state, m_locutil, m_regexp, m_whitespace, m_util) {
+], function (m_identifier, m_tokentype, m_state, m_locutil, m_regexp, m_whitespace, m_util) {
     'use strict';
     const {isIdentifierStart, isIdentifierChar} = m_identifier;
+
+    const {types : tt, keywords : keywordTypes} = m_tokentype;
+
     const {Parser} = m_state;
     const {SourceLocation} = m_locutil;
     const {RegExpValidationState} = m_regexp;
@@ -5835,24 +5850,22 @@ define('skylark-acorn/main',[
     './locutil',
     './node',
     './tokentype',
-    './tokentype',
-    './tokentype',
-    './tokencontext',
     './tokencontext',
     './identifier',
     './tokenize',
     './whitespace'
-], function (m_state, m_options, m_locutil, m_node, m_tokentype, tokTypes, keywordTypes, m_tokencontext, tokContexts, m_identifier, m_tokenize, m_whitespace) {
+], function (m_state, m_parseutil,m_statement,m_lval,m_expression,m_location,m_scope,m_options, m_locutil, m_node, m_tokentype, m_tokencontext,  m_identifier, m_tokenize, m_whitespace) {
     'use strict';
     const {Parser} = m_state;
     const {defaultOptions} = m_options;
     const {Position, SourceLocation, getLineInfo} = m_locutil;
     const {Node} = m_node;
-    const {TokenType} = m_tokentype;
-    const {TokContext} = m_tokencontext;
+    const {TokenType, types : tokTypes, keywords : keywordTypes} = m_tokentype;
+    const {TokContext,types : tokContexts} = m_tokencontext;
     const {isIdentifierChar, isIdentifierStart} = m_identifier;
     const {Token} = m_tokenize;
     const {isNewLine, lineBreak, lineBreakG, nonASCIIwhitespace} = m_whitespace;
+    
     const version = '8.10.0';
     Parser.acorn = {
         Parser,

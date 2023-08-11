@@ -6,8 +6,10 @@ define([
     './util',
     './parseutil',
     './scopeflags'
-], function (tt, m_state, m_whitespace, m_identifier, m_util, m_parseutil, m_scopeflags) {
+], function (m_tokentype, m_state, m_whitespace, m_identifier, m_util, m_parseutil, m_scopeflags) {
     'use strict';
+    const {types : tt} = m_tokentype;
+
     const {Parser} = m_state;
     const {lineBreak, skipWhiteSpace} = m_whitespace;
     const {isIdentifierStart, isIdentifierChar, keywordRelationalOperator} = m_identifier;

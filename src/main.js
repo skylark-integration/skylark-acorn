@@ -10,24 +10,22 @@ define([
     './locutil',
     './node',
     './tokentype',
-    './tokentype',
-    './tokentype',
-    './tokencontext',
     './tokencontext',
     './identifier',
     './tokenize',
     './whitespace'
-], function (m_state, m_options, m_locutil, m_node, m_tokentype, tokTypes, keywordTypes, m_tokencontext, tokContexts, m_identifier, m_tokenize, m_whitespace) {
+], function (m_state, m_parseutil,m_statement,m_lval,m_expression,m_location,m_scope,m_options, m_locutil, m_node, m_tokentype, m_tokencontext,  m_identifier, m_tokenize, m_whitespace) {
     'use strict';
     const {Parser} = m_state;
     const {defaultOptions} = m_options;
     const {Position, SourceLocation, getLineInfo} = m_locutil;
     const {Node} = m_node;
-    const {TokenType} = m_tokentype;
-    const {TokContext} = m_tokencontext;
+    const {TokenType, types : tokTypes, keywords : keywordTypes} = m_tokentype;
+    const {TokContext,types : tokContexts} = m_tokencontext;
     const {isIdentifierChar, isIdentifierStart} = m_identifier;
     const {Token} = m_tokenize;
     const {isNewLine, lineBreak, lineBreakG, nonASCIIwhitespace} = m_whitespace;
+    
     const version = '8.10.0';
     Parser.acorn = {
         Parser,
